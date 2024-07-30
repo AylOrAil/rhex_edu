@@ -48,7 +48,7 @@ Welcome to the RHex Educational repository! This project provides a comprehensiv
 
 2. **For PCs with NVIDIA GPUs:** Make sure you are using official NVIDIA drivers. This can be done using `Software & Updates` app of Ubuntu. Go to `Additional Drivers` tab and choose the driver that is a `tested` one. Then, apply the changes (may need rebooting). You can confirm the correct installation using `sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi`
 
-3. Make sure that you are working with [X11](https://beebom.com/how-switch-between-wayland-xorg-ubuntu/) not Wayland. 
+3. Make sure that you are working with [X11](https://beebom.com/how-switch-between-wayland-xorg-ubuntu/) not Wayland.
 
 4. Allow X server connections from the container by running `xhost +local:docker` on the host machine. You might want to add this command to your bashrc using `echo 'xhost +local:docker' >> ~/.bashrc`
 
@@ -86,7 +86,7 @@ Step-by-step instructions for setting up the development environment is provided
 
 3. **Install Dependencies (not necessary for now)**
     - Run `rosdep install --from-paths src --ignore-src -r -y` command inside the VS Code terminal (same terminal that you run `rviz2` command). All dependencies for ROS2 packages will be installed inside the container.
-    
+
     - After that run `colcon build --symlink-install` command inside **rhex_ws** folder which should only have the **src** folder in it. For any problems that might occur check [Troubleshooting](#troubleshooting) Section.
 
 <!------------------------------------------------------------------------>
@@ -95,7 +95,7 @@ Step-by-step instructions for setting up the development environment is provided
 
 ### Create Your Own Workspace
 - In our workflow, it is required to work on the personal branch of your own because the `main` branch of the repository is for general purpose usage and it has to be working (should be executable without an error). To create your own environment, you can use the following commands with your name. This will push your own branch to the remote repository and will allow you to work on your project without any conflicts with others
-``` 
+```
 git checkout -b dev/<your-name>
 git push -u origin dev/<your-name>
 ```
@@ -108,8 +108,18 @@ git push -u origin dev/<your-name>
 
 
 ### Running The Simulation
-- To run the simulation try running `ros2 launch rhex_gazebo start_sim.launch.py`. Which will launch all the necessary ROS nodes.
-- More will be added...
+To run the simulation and control the robot, we need to run four different commands in four different VS Code terminals.
+- `ros2 launch rhex_gazebo start_sim.launch.py` Runs the simulation, summons RHex and prepares ROS nodes.
+- `ros2 launch rhex_control start_controller_server.launch.py` Listens to the RHex controller and transfers the commands to Gazebo sim (Yes, it is not the controller even though it is called that).
+- `start_rhex_supervisor.sh` Starts the actual controller of RHex
+- `start_fltk_gui.sh` Starts GUI. One can calibrate the robot and start to operate using buttons under `Turbo` section. You can explore the GUI, it is an old one.
+
+For the last two commands, we won't make an impromevent since they are irrelevant for our work. Instead we want to write our own simulation controller and GUI.
+
+You can also use the command from `bringup` package to run the above commands at once:
+```
+ros2 launch rhex_bringup bringup_simulation_gui.launch.py
+```
 
 ### Explore and Modify
 - **rhex_gazebo** directory contains gazebo related files and worlds check README.md inside that folder.
@@ -149,3 +159,4 @@ We would like to thank the contributors for their invaluable support and contrib
     - [Gitlab](https://gitlab.com/cemonem), [Github](https://github.com/cemonem)
 2.  🔥 Osama Awad
     - [Gitlab](https://gitlab.com/usame_aw), [Github](https://github.com/usame-aw)
+# spam

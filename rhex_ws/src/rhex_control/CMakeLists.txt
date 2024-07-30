@@ -11,8 +11,25 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 install(
+    PROGRAMS
+        scripts/controller_server_network.py
+    DESTINATION
+        lib/${PROJECT_NAME}
+)
+
+
+
+install(
   PROGRAMS
-    scripts/controller_server_network.py
+    scripts/simple_walker.py
+  DESTINATION
+    lib/${PROJECT_NAME}
+)
+
+
+install(
+  PROGRAMS
+    scripts/test_robot.py
   DESTINATION
     lib/${PROJECT_NAME}
 )
